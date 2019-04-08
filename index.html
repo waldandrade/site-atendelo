@@ -144,15 +144,15 @@
                     <v-img src="./assets/background.svg" cover
                     :height="$vuetify.breakpoint.mdAndUp?'500px':'1500px'"
                     alt="Vuetify">
-                    <v-container fluid>
-                      <v-layout fill-height align-center justify-center column="$vuetify.breakpoint.mdAndUp" :row="$vuetify.breakpoint.smAndDown" :wrap="$vuetify.breakpoint.smAndDown" pt-5 :pl-5="$vuetify.breakpoint.mdAndUp" :pr-5="$vuetify.breakpoint.mdAndUp" mt-5>
-                        <v-flex>
+                    <v-container fill-height grid-list-xl fluid>
+                      <v-layout fill-height align-space-around justify-space-around :column="$vuetify.breakpoint.smAndDown" :row="$vuetify.breakpoint.mdAndUp" :wrap="$vuetify.breakpoint.mdAndUp" pt-5 :pl-5="$vuetify.breakpoint.mdAndUp" :pr-5="$vuetify.breakpoint.mdAndUp" mt-5>
+                        <v-flex xs12 md3>
                           <v-hover>
                             <v-card
                               slot-scope="{ hover }"
                               :class="`elevation-${hover ? 20 : 2}`"
                               class="mx-auto"
-                              width="344"
+                              width="100%"
                             >
                             <v-layout align-center>
                               <div class="bagage-wrapper">
@@ -187,13 +187,13 @@
                             </v-card>
                           </v-hover>
                         </v-flex>
-                        <v-flex>
+                        <v-flex  xs12 md3>
                             <v-hover>
                               <v-card
                                 slot-scope="{ hover }"
                                 :class="`elevation-${hover ? 20 : 2}`"
                                 class="mx-auto"
-                                width="344"
+                                width="100%"
                               >
                                 <v-layout align-center>
                                   <div class="bagage-wrapper">
@@ -228,13 +228,13 @@
                               </v-card>
                             </v-hover>
                           </v-flex>
-                          <v-flex>
+                          <v-flex xs12 md3>
                               <v-hover>
                                 <v-card
                                   slot-scope="{ hover }"
                                   :class="`elevation-${hover ? 20 : 2}`"
                                   class="mx-auto"
-                                  width="344"
+                                  width="100%"
                                 >
                                   <v-layout align-center>
                                       <div class="bagage-wrapper">
@@ -276,10 +276,11 @@
                   <v-flex id="contact">
                       <v-parallax src="./assets/shopping.jpg">
                       <v-layout
-                        align-space-between
+                        :align-space-between="$vuetify.breakpoint.mdAndUp"
+                        :align-space-around="$vuetify.breakpoint.smAndDown"
                         justify-center
                         column
-                        pa-5
+                        :pa-5="$vuetify.breakpoint.mdAndUp"
                       >
                       <v-card style="width: auto" class="elevation-10">
                           <v-toolbar
@@ -442,8 +443,9 @@
                             :key="icon"
                             class="mx-3 white--text"
                             icon
+                            :style="{'width': $vuetify.breakpoint.mdAndUp?'36px':'25px'}"
                           >
-                            <v-icon size="24px">{{ icon }}</v-icon>
+                            <v-icon :size="$vuetify.breakpoint.mdAndUp?'24px':'20px'">{{ icon }}</v-icon>
                           </v-btn>
                         </v-card-text>
 
