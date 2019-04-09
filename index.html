@@ -68,7 +68,7 @@
                           alt="Parede">
                           <v-layout align-space-around justify-start column fill-height pt-5>
                             <v-flex shrink>
-                              <v-toolbar color="transparent main-menu" class="elevation-0 mt-5" fixed>
+                              <v-toolbar color="transparent main-menu" class="elevation-0" height="150px" fixed prominent scroll-off-screen>
                                 <v-layout
                                   justify-end
                                   row
@@ -140,7 +140,7 @@
                       </v-flex>
                     </v-layout>       
                   </v-flex>
-                  <v-flex>
+                  <v-flex id="plans">
                     <v-img src="./assets/background.svg" cover
                     :height="$vuetify.breakpoint.mdAndUp?'500px':'1500px'"
                     alt="Vuetify">
@@ -274,7 +274,6 @@
                     </v-img>
                   </v-flex>
                   <v-flex id="contact">
-                      <v-parallax src="./assets/shopping.jpg">
                       <v-layout
                         :align-space-between="$vuetify.breakpoint.mdAndUp"
                         :align-space-around="$vuetify.breakpoint.smAndDown"
@@ -325,7 +324,6 @@
                           </v-form>
                         </v-card>
                     </v-layout>
-                  </v-parallax>
                   </v-flex>
                   <v-footer
                       dark
@@ -545,7 +543,7 @@
                 },
                 {
                   title: 'Planos',
-                  window: '#plains'
+                  window: '#plans'
                 },
                 {
                   title: 'Contato',
