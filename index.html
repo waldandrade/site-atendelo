@@ -11,8 +11,8 @@
       <div id="app">
          <v-app>
             <v-content>
-               <v-container pa-0 fluid fill-height>
-                <v-layout align-space-around justify-start column fill-height>
+               <v-container pa-0 fluid style="max-height: calc(100vh)" id="scroll-target" class="scroll-y">
+                <v-layout v-scroll:#scroll-target="onScroll" align-space-around justify-start column>
                   <v-flex style="background-color: #0C1021;" id="home">
                     <v-img src="./assets/background.svg" conver
                             height='calc(100vh - 100px)'
@@ -26,7 +26,6 @@
                               color="transparent"
                               dark
                               scroll-off-screen
-                              scroll-target="#scrolling-techniques"
                             >
                               <div>
                                 <v-layout justify-space-around>
@@ -66,13 +65,12 @@
                           height='calc(100vh - 100px)'
                           min-height="600px"
                           alt="Parede">
-                          <v-layout align-space-around justify-start column fill-height pt-5>
+                          <v-layout align-space-around justify-start column fill-height>
                             <v-flex shrink>
-                              <v-toolbar color="transparent main-menu" class="elevation-0" height="150px" fixed prominent scroll-off-screen>
+                              <v-toolbar color="transparent" class="elevation-0" v-if="onboarding === '#home'" fixed height="150px" style="width: calc(100% - 20px)" scroll-toolbar-off-screen>
                                 <v-layout
                                   justify-end
                                   row
-                                  wrap
                                   pr-5
                                   mr-5
                                 >
@@ -81,19 +79,17 @@
                                     v-for="link in links"
                                     :key="link.title"
                                     color="primary"
-                                    @click="onboarding = link.window"
+                                    @click="$vuetify.goTo(link.window, scrollOptions)"
                                     flat
                                     round
                                   >
                                     {{ link.title }}
                                   </v-btn>
                                 </v-layout>
-                              </v-flex>
-                            </v-toolbar>
-                            <v-layout align-space-around justify-center column fill-height>
-                              <v-flex grow>
-                                  <img width="80%" src="./assets/tablet.svg"></img>
-                              </v-flex>
+                              </v-toolbar>
+                            </v-flex>
+                            <v-layout align-start justify-start column fill-height mt-5>
+                                <img width="80%" src="./assets/tablet.svg"></img>
                             </v-layout>
                           </v-layout>
                           </v-img>
@@ -455,6 +451,19 @@
                       </v-card>
                     </v-footer>
                 </v-layout>
+                <v-fab-transition>
+                    <v-btn
+                      color="grey"
+                      dark
+                      fab
+                      fixed
+                      bottom
+                      right
+                      @click="() => $vuetify.goTo('#home', scrollOptions)"
+                    >
+                      <v-icon>keyboard_arrow_up</v-icon>
+                    </v-btn>
+                  </v-fab-transition>
                </v-container>
             </v-content>
         </v-app>
@@ -511,6 +520,7 @@
           el: '#app',
           data () {
             return {
+              offsetTop: 0,
               pacoteGratuito: {
                 itens: [
                   { contain: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
@@ -520,7 +530,8 @@
                 ]
               },
               scrollOptions: {
-                duration: 300,
+                container: '#scroll-target',
+                duration: 500,
                 offset: 0,
                 easing: 'easeInOutCubic'
               },
@@ -531,7 +542,6 @@
                 assunto: 'Seu nome: Tenho uma sugestão ou dúvida',
                 to: 'contato@jlotos.com.br'
               },
-              onboarding: '#home',
               links: [
                 {
                   title: 'Inicio',
@@ -564,12 +574,12 @@
               if (val) {
                 // fazer alguma ação quando o mouse fica sobre a imagem do tablet
               }
-            },
-            onboarding (val) {
-              this.$vuetify.goTo(val, this.scrollOptions)
             }
           },
           methods: {
+            onScroll (e) {
+              this.offsetTop = e.target.scrollTop
+            },
             executarProcessamento (dataSet) {
               store.dispatch('executionRequest', dataSet)
             },
@@ -601,6 +611,17 @@
             })
           },
           computed: {
+            onboarding () {
+              if (this.offsetTop < 500) {
+                return '#home'
+              } else if (this.offsetTop < 1000) {
+                return '#vantagens'
+              } else if (this.offsetTop < 1500) {
+                return '#plans'
+              } else {
+                return '#contact'
+              }
+            },
             result () {
               return store.getters.result
             },

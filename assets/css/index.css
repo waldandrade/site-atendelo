@@ -2,7 +2,7 @@
   background: #f1f1f1;
  }
  
- html { overflow: auto; }
+ html { overflow: hidden; }
 
 .v-toolbar__extension {
   height: 100px !important;
@@ -18,8 +18,4 @@
 
 .bagage-wrapper {
   height: 100px;
-}
-
-.v-toolbar .main-menu:first-child {
-  z-index: 2000;
 }
